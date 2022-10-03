@@ -1,4 +1,5 @@
 
+local rX, rY, rZ = 0,0,0
 local facing=0
 
 
@@ -6,6 +7,25 @@ local function face(direction)
     
 end
 local function digLine(dis)
+    turtle.dig()
+    turtle.forward()
+
+    if facing == 0 then
+        rX = rX + 1
+    end
+     if facing == 1 then
+        rY = rX + 1
+     end
+     if facing == 2 then
+        rX = rX - 1
+     end
+     if facing == 3 then
+        rY = rY - 1
+     end
+    
+
+    
+
     
 end
 
@@ -16,6 +36,7 @@ local function digLevel(x,y)
 
         if facing == 0 then
             turtle.turnRight()
+            facing = 1
             digLine(1)
             turtle.turnRight()
             facing = 2
@@ -26,7 +47,7 @@ local function digLevel(x,y)
             turtle.turnLeft()
             facing = 1
         end
-        
+
         y = y - 1
     end
 

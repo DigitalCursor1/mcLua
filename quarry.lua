@@ -1,9 +1,18 @@
 
 local rX, rY, rZ = 0,0,0
+local sX,sY,sZ
 local facing=0
-
+local sFacing
 
 local function face(direction)
+    while facing < direction do
+        turtle.turnRight()
+        facing = facing + 1
+    end
+    while facing > direction do
+        turtle.turnLeft()
+        facing = facing - 1
+    end
     
 end
 local function digLine(dis)
@@ -51,4 +60,9 @@ local function digLevel(x,y)
         y = y - 1
     end
 
+end
+
+
+do
+    
 end

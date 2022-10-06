@@ -1,39 +1,86 @@
+---@diagnostic disable: unused-label
 
-local rX, rY, rZ = 0,0,0
-local sX,sY,sZ
-local facing=0
-local sFacing
 
-local function face(direction)
-    while facing < direction do
+--[[
+    Author: Aidan Cork, Aka Digital Cursor
+    Project: cc:tweaked turlte quarry script
+]]
+
+::start::
+print("Begin by placing the turtle and a chest behind it and another chest to the right. Put fuel in the left sided chest.The turtle will deposit its inventory into the back one. To begin type y")
+local response = io.read()
+
+
+if not response == "y" then
+print("thats not y, try again")
+
+goto start
+
+end
+
+local rX, rY ,rZ = 0,0,0 --reletive x y z
+local facing = 0 -- 0=frwd, 1 = right, 1 = back , 
+local lX, lY, lZ         --last x y z, used to rember were it left off to get fue 
+local lastFacing --last facing
+
+
+
+
+
+
+print("How many blocks forward?")
+local gX = io.read("*n")
+
+print("How Many blocks to the right?")
+local gZ = io.read("*n")
+
+print("How many blocks down?")
+local gY = io.read("*n")
+
+turtle.select(0)
+turtle.turnLeft()
+turtle.suck()
+
+
+turtle.digDown()
+turtle.down()
+
+digLine(gX)
+
+
+
+
+local function face(dir)
+    while dir < facing do
         turtle.turnRight()
         facing = facing + 1
     end
-    while facing > direction do
+    while dir > facing do
         turtle.turnLeft()
         facing = facing - 1
     end
-    
 end
+
 local function digLine(dis)
-    turtle.dig()
-    turtle.forward()
+    repeat
+        turtle.dig()
+        turtle.forward()
+        local mv = mv + 1
 
-    if facing == 0 then
-        rX = rX + 1
-    end
-     if facing == 1 then
-        rY = rX + 1
-     end
-     if facing == 2 then
-        rX = rX - 1
-     end
-     if facing == 3 then
-        rY = rY - 1
-     end
-    
-
-    
+        if facing == 0 then
+            rX = rX + 1
+        end
+         if facing == 1 then
+            rY = rX + 1
+         end
+         if facing == 2 then
+            rX = rX - 1
+         end
+         if facing == 3 then
+            rY = rY - 1
+         end
+        
+    until mv == dis
 
     
 end
@@ -55,6 +102,12 @@ local function digLevel(x,y)
             digLine(1)
             turtle.turnLeft()
             facing = 1
+        end
+
+        local function depositReturn()
+            lX,lY,lZ = rX,rY,rZ
+
+            
         end
 
         y = y - 1
